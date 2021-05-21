@@ -1,0 +1,41 @@
+$theme-colors: (
+  primary:#6181E8,
+  info: #41AC9A
+);
+
+@import "~bootstrap/scss/bootstrap.scss";
+
+.card {
+  @extend .card;
+  border-radius: 25px;
+}
+
+.card-login {
+  background-color: #9cb0f2;
+}
+
+.btn {
+  @extend .btn;
+  @extend .px-4;
+  border-radius: 8px;
+}
+
+.dotted {
+  border-top: dotted;
+}
+
+.hide-md {
+  display: block;
+}
+
+@media (max-width: 992px) {
+  .hide-md {
+    display: none;
+  }
+}
+
+.link {
+  color: #6181E8;
+  border-bottom: #6181E8;
+  cursor: pointer;
+}
