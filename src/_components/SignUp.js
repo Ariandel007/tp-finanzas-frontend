@@ -15,7 +15,7 @@ const SignUp = () => {
                 </div>
                 <div className="hide-md col-12 col-lg-6">
                     <div className="d-flex justify-content-center">
-                        <img src="/images/man-sign-up.png"></img>
+                        <img height="400px" src="/images/man-sign-up.png"></img>
                     </div>
                 </div>
             </div>

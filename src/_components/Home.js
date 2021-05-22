@@ -15,7 +15,7 @@ const Home = () => {
 
                 <div className="col-12 col-lg-6">
                     <div className="d-flex justify-content-center">
-                        <img src="/images/woman-img.png"></img>
+                        <img height="355px" src="/images/woman-img.png"></img>
                     </div>
                 </div>
             </div>
