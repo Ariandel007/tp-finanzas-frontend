@@ -7,7 +7,7 @@ const LoginForm = () => {
     const goToRegister = () => history.push('/sign-up');
 
     return (
-        <div className="card card-login p-4">
+        <div className="card card-data-form p-4">
 
             <form>
                 <div className="d-flex justify-content-center mb-3">
@@ -16,13 +16,13 @@ const LoginForm = () => {
                 <div className="form-group row">
                     <label htmlFor="inputUser" className="col-sm-4 col-form-label"><strong>Usuario</strong></label>
                     <div className="col-sm-8">
-                    <input type="text" className="form-control" id="inputUser" placeholder="Escribe algo"/>
+                    <input type="text" className="form-control" id="inputUser" name="username" placeholder="Escribe algo"/>
                     </div>
                 </div>
                 <div className="form-group row">
                     <label htmlFor="inputPassword" className="col-sm-4 col-form-label"><strong>Contraseña</strong></label>
                     <div className="col-sm-8">
-                    <input type="password" className="form-control" id="inputPassword" placeholder="*******"/>
+                    <input type="password" className="form-control" id="inputPassword" name="password" placeholder="*******"/>
                     </div>
                 </div>
 

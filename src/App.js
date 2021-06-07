@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import './App.scss';
 import Home from './_components/Home';
 import SignUp from './_components/SignUp';
+import Receipt from './_components/Receipt';
 
 //REDUX
 import { Provider } from 'react-redux';
@@ -19,6 +20,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/sign-up" component={SignUp}></Route>
+          <Route exact path="/receipt" component={Receipt}></Route>
         </Switch>
       </div>
 

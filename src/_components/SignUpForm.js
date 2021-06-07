@@ -6,7 +6,7 @@ const SignUpForm = () => {
     const goToLogin = () => history.push('/');
 
     return (
-        <div className="card card-login p-4">
+        <div className="card card-data-form p-4">
             <form>
                 <div className="d-flex justify-content-center mb-3">
                     <h3>Registrate</h3>
