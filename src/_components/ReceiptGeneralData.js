@@ -2,6 +2,14 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import '../picker.scss'
 
 const ReceiptGeneralData = () => {
+
+    const style = {
+        'width': '100%',
+        'padding': '0.3rem',
+        'boxSizing': 'border-box',
+        'borderRadius': '4px',
+        'border': 'none'
+    }
       
     return (
         <div className="card card-data-form p-4">
@@ -13,14 +21,14 @@ const ReceiptGeneralData = () => {
                 <div className="form-group row">
                     <label htmlFor="dateOfIssue" className="col-sm-4 col-form-label"><strong>(FE) Fecha de Emisión</strong></label>
                     <div className="col-sm-8">
-                    <DayPickerInput inputProps={{ style: { width: '100%' } }}  onDayChange={day => console.log(day)} />
+                    <DayPickerInput inputProps={{ style: style }}  onDayChange={day => console.log(day)} />
                     </div>
                 </div>
 
                 <div className="form-group row">
                     <label htmlFor="paymentDate" className="col-sm-4 col-form-label"><strong>(FP) Fecha de Pago</strong></label>
                     <div className="col-sm-8">
-                    <DayPickerInput inputProps={{ style: { width: '100%' } }}  onDayChange={day => console.log(day)} />
+                    <DayPickerInput inputProps={{ style: style }}  onDayChange={day => console.log(day)} />
                     </div>
                 </div>
 
@@ -38,12 +46,12 @@ const ReceiptGeneralData = () => {
                     </div>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-light active">
-                            <input type="radio" name="options" id="option1" autocomplete="off" checked/> Dólares
+                    <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label className="btn btn-light active">
+                            <input type="radio" name="options" id="option1" autoComplete="off"/> Dólares
                         </label>
-                        <label class="btn btn-light">
-                            <input type="radio" name="options" id="option3" autocomplete="off"/> Soles
+                        <label className="btn btn-light">
+                            <input type="radio" name="options" id="option3" autoComplete="off"/> Soles
                         </label>
                     </div>
                 </div> 
