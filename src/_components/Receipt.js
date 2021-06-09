@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import RateAndTermForm from "./RateAndTermForm";
 import ReceiptGeneralData from "./ReceiptGeneralData";
 import SelectRate from "./SelectRate";
 
@@ -21,7 +22,18 @@ const Receipt = () => {
             isCommercialYear: false,
             isNominal: false,
             percentage: true
-        }
+        },
+        rateTerm: {
+            id: 0,
+            name: '',
+            numberDays: 0,
+        },
+        compoundingPeriod: {
+            id: 0,
+            name: '',
+            numberDays: 0,
+        },
+        expenses: []
     });
 
     useEffect(()=> {
@@ -50,11 +62,13 @@ const Receipt = () => {
             return (
                 <Fragment>
                     <div className="col-12 col-lg-6">
-                        <div>INSERTAR FORMULARIO</div>
+                        <RateAndTermForm dataView={dataView} setdataView={setdataView}/>
                     </div>
 
                     <div className="col-12 col-lg-6">
-                        <div>INSERTAR MANI IMAGEN</div>
+                    <div className="d-flex justify-content-center pt-5">
+                        <img height="400px" src="/images/mano-tasa-img.png"></img>
+                    </div>
                     </div>
                 </Fragment>
             );

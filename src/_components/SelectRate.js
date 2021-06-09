@@ -24,6 +24,9 @@ const SelectRate = ({ dataView, setdataView, receiptFormData, setReceiptFormData
             <div className="d-flex justify-content-center">
                 <h1>Elige tu tasa</h1>
             </div>
+            <div className="d-flex justify-content-center py-3">
+                        <img height="300px" src="/images/tasa-interes-img.png" ></img>
+                    </div>
             <div className="d-flex justify-content-around">
                 <button type="button" className="btn btn-primary" onClick={ () => selectRateType(true)} >Nominal</button>
                 <button type="button" className="btn btn-primary" onClick={ () => selectRateType(false)}>Efectiva</button>
