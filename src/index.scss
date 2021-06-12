@@ -39,3 +39,12 @@ $theme-colors: (
   border-bottom: #6181E8;
   cursor: pointer;
 }
+
+.background-table {
+  background-color: white;
+}
+
+.max-size {
+  max-height: 300px;
+  overflow-y: auto;
+}

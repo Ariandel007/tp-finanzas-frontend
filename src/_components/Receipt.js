@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import ExpenseForm from "./ExpenseForm";
 import RateAndTermForm from "./RateAndTermForm";
 import ReceiptGeneralData from "./ReceiptGeneralData";
 import SelectRate from "./SelectRate";
@@ -33,7 +34,17 @@ const Receipt = () => {
             name: '',
             numberDays: 0,
         },
-        expenses: []
+        expenses: [
+            // {
+            //     isEffective: true,
+            //     isFinal: true,
+            //     value: 0.0,
+            //     expenseReason: {
+            //         id: 0,
+            //         name: '',
+            //     }
+            // },
+        ]
     });
 
     useEffect(()=> {
@@ -69,6 +80,20 @@ const Receipt = () => {
                     <div className="d-flex justify-content-center pt-5">
                         <img height="400px" src="/images/mano-tasa-img.png"></img>
                     </div>
+                    </div>
+                </Fragment>
+            );
+        }
+
+        if (dataView.stage == 2) {
+            return (
+                <Fragment>
+                    <div className="col-12 col-lg-6">
+                        <ExpenseForm isFinal={false}/>
+                    </div>
+
+                    <div className="col-12 col-lg-6">
+                        <ExpenseForm isFinal={true}/>
                     </div>
                 </Fragment>
             );
