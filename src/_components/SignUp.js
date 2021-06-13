@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import SignUpForm from "./SignUpForm";
 
 const SignUp = () => {

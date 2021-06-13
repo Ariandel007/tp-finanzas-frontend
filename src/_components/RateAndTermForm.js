@@ -117,6 +117,7 @@ const RateAndTermForm = ({ dataView, setdataView }) => {
                     </div>
                 </div>
 
+                {/* EL PERIODO DE CAPITALIZACION SOLO EXISTE CUANDO ES NOMINAL */}
                 <div className="form-group row">
                     <label className="col-sm-4 col-form-label"><strong>(PC) Periodo de Capital.</strong></label>
                     <div className="col-sm-4">

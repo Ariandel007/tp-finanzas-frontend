@@ -13,7 +13,7 @@ const SelectRate = ({ dataView, setdataView, receiptFormData, setReceiptFormData
 
         setdataView({
             ...dataView,
-            title: 'Recibo Descontado a Tasa Nominal',
+            title: isNominalState? 'Recibo Descontado a Tasa Nominal' : 'Recibo Descontado a Tasa Efectiva',
             stage: 1
         });
 

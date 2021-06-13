@@ -3,6 +3,7 @@ import ExpenseForm from "./ExpenseForm";
 import RateAndTermForm from "./RateAndTermForm";
 import ReceiptGeneralData from "./ReceiptGeneralData";
 import SelectRate from "./SelectRate";
+import Results from "./Results";
 
 const Receipt = () => {
 
@@ -35,23 +36,42 @@ const Receipt = () => {
             numberDays: 0,
         },
         expenses: [
-            // {
-            //     isEffective: true,
-            //     isFinal: true,
-            //     value: 0.0,
-            //     expenseReason: {
-            //         id: 0,
-            //         name: '',
-            //     }
-            // },
+
         ]
     });
+
+    const [expensesSelectedStart, setExpensesSelectedStart] = useState([]);
+
+    const [expensesSelectedEnd, setExpensesSelectedEnd] = useState([]);
 
     useEffect(()=> {
         console.log('Es nominal', receiptFormData.rate.isNominal);
         console.log('Stage', dataView.stage);
+        console.log('receiptFormData', receiptFormData);
     },
-    [receiptFormData.rate.isNominal, dataView.stage]);
+    [receiptFormData.rate.isNominal, dataView.stage, receiptFormData]);
+
+    const showResults = () => {
+
+        setdataView({
+            title: 'Resultados',
+            stage: 3
+        });
+
+        setReceiptFormData({
+            ...receiptFormData,
+            expenses: [
+                ...receiptFormData.expenses,
+                ...expensesSelectedStart,
+                ...expensesSelectedEnd
+            ]
+        });
+    }
+
+    const backTasa = () => setdataView({
+        title: receiptFormData.rate.isNominal ? 'Recibo Descontado a Tasa Nominal' : 'Recibo Descontado a Tasa Efectiva',
+        stage: 1
+    });
 
     const contentPage = () => {
 
@@ -89,11 +109,33 @@ const Receipt = () => {
             return (
                 <Fragment>
                     <div className="col-12 col-lg-6">
-                        <ExpenseForm isFinal={false}/>
+                        <ExpenseForm isFinal={false} expensesSelected={expensesSelectedStart} setExpensesSelected={setExpensesSelectedStart}/>
                     </div>
 
                     <div className="col-12 col-lg-6">
-                        <ExpenseForm isFinal={true}/>
+                        <ExpenseForm isFinal={true} expensesSelected={expensesSelectedEnd} setExpensesSelected={setExpensesSelectedEnd}/>
+                    </div>
+
+                    <div className="col-12">
+                        <div className="d-flex justify-content-center mt-3">
+                            <button type="button" className="btn btn-primary mr-3" onClick={backTasa}>Atrás</button>
+                            <button type="button" className="btn btn-primary ml-3" onClick={showResults} >Mostrar</button>
+                        </div>
+                    </div>
+                </Fragment>
+            );
+        }
+
+        if (dataView.stage == 3) {
+            return (
+                <Fragment>
+                    <div className="col-12">
+                        <Results/>
+                    </div>
+
+                    <div className="col-12">
+                        <div className="d-flex justify-content-center mt-3">
+                        </div>
                     </div>
                 </Fragment>
             );

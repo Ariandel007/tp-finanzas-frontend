@@ -42,9 +42,38 @@ $theme-colors: (
 
 .background-table {
   background-color: white;
+  border-radius: 10px;
 }
+
+.background-table::-webkit-scrollbar {
+  width: 10px;   
+}
+
+.background-table::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.background-table::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.background-table::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 4px;
+}
+
 
 .max-size {
   max-height: 300px;
   overflow-y: auto;
+}
+
+.cellSelected {
+  background-color: #d4daee;
+}
+
+.selectable {
+  cursor: pointer;
 }
