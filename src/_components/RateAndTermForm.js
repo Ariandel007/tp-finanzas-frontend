@@ -2,7 +2,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import '../picker.scss'
 import { useState } from "react"
 
-const RateAndTermForm = ({ dataView, setdataView }) => {
+const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFormData }) => {
 
     const style = {
         'width': '100%',
@@ -107,8 +107,7 @@ const RateAndTermForm = ({ dataView, setdataView }) => {
                 </div>
 
                 <div className="form-group row">
-                    {/* ACA AÑADIR ESTRUCTIRA DE CONTROL CUANDO SEA NOMIMAL O NO */}
-                    <label className="col-sm-4 col-form-label"><strong>(TE) Tasa Nominal</strong></label>
+                    <label className="col-sm-4 col-form-label"><strong>{receiptFormData.rate.isNominal? '(TN) Tasa Nominal' : '(TE) Tasa Efectiva'}</strong></label>
                     <div className="col-sm-6">
                         <input type="text" className="form-control" id="percentage" name="percentage"/>
                     </div>
@@ -117,21 +116,27 @@ const RateAndTermForm = ({ dataView, setdataView }) => {
                     </div>
                 </div>
 
-                {/* EL PERIODO DE CAPITALIZACION SOLO EXISTE CUANDO ES NOMINAL */}
-                <div className="form-group row">
-                    <label className="col-sm-4 col-form-label"><strong>(PC) Periodo de Capital.</strong></label>
-                    <div className="col-sm-4">
-                        <select className="form-control" onChange={onSelectCompoundingPeriodHandler} value={compoundingPeriodSelected.id}>
-                            {
-                                compoundingPeriods.map(compoundingPeriod => (<option key={compoundingPeriod.id} value={compoundingPeriod.id}> {compoundingPeriod.name} </option>))
-                            }
-                        </select>
+                {
+                    receiptFormData.rate.isNominal ?
+                    (
+                    <div className="form-group row">
+                        <label className="col-sm-4 col-form-label"><strong>(PC) Periodo de Capital.</strong></label>
+                        <div className="col-sm-4">
+                            <select className="form-control" onChange={onSelectCompoundingPeriodHandler} value={compoundingPeriodSelected.id}>
+                                {
+                                    compoundingPeriods.map(compoundingPeriod => (<option key={compoundingPeriod.id} value={compoundingPeriod.id}> {compoundingPeriod.name} </option>))
+                                }
+                            </select>
+                        </div>
+                        <div className="col-sm-4">
+                            <input disabled={compoundingPeriodSelected.id != 9} type="text" className="form-control" id="retainage" name="numberDays" value={compoundingPeriodSelected.numberDays} onChange={onChangeSelectCompoundingPeriod}/>
+                        </div>
                     </div>
-                    <div className="col-sm-4">
-                        <input disabled={compoundingPeriodSelected.id != 9} type="text" className="form-control" id="retainage" name="numberDays" value={compoundingPeriodSelected.numberDays} onChange={onChangeSelectCompoundingPeriod}/>
-                    </div>
-                </div>
-
+                    )
+                    :
+                    null
+                }
+                
                 <div className="form-group row">
                     <label htmlFor="dateOfIssue" className="col-sm-4 col-form-label"><strong>(FD) Fecha de Descuento</strong></label>
                     <div className="col-sm-8">

@@ -44,6 +44,42 @@ const Receipt = () => {
 
     const [expensesSelectedEnd, setExpensesSelectedEnd] = useState([]);
 
+    const resetFormData = () => {
+        setReceiptFormData({
+            isDolar: false,
+            description: '',
+            name: '',
+            retainage: 0.0,
+            totalValue: 0.0,
+            paymentDate: 0.0,
+            dateOfIssue: '',
+            rate: {
+                isCommercialYear: false,
+                isNominal: false,
+                percentage: true
+            },
+            rateTerm: {
+                id: 0,
+                name: '',
+                numberDays: 0,
+            },
+            compoundingPeriod: {
+                id: 0,
+                name: '',
+                numberDays: 0,
+            },
+            expenses: [
+    
+            ]
+        });
+
+        setdataView({
+            title: 'Datos del Recibo por Honorarios',
+            stage: 0
+        });
+
+    }
+
     useEffect(()=> {
         console.log('Es nominal', receiptFormData.rate.isNominal);
         console.log('Stage', dataView.stage);
@@ -93,7 +129,7 @@ const Receipt = () => {
             return (
                 <Fragment>
                     <div className="col-12 col-lg-6">
-                        <RateAndTermForm dataView={dataView} setdataView={setdataView}/>
+                        <RateAndTermForm dataView={dataView} setdataView={setdataView} receiptFormData={receiptFormData} setReceiptFormData={setReceiptFormData}/>
                     </div>
 
                     <div className="col-12 col-lg-6">
@@ -135,6 +171,8 @@ const Receipt = () => {
 
                     <div className="col-12">
                         <div className="d-flex justify-content-center mt-3">
+                            <button type="button" className="btn btn-primary mr-3">Guardar</button>
+                            <button type="button" className="btn btn-primary ml-3" onClick={resetFormData} >Nuevo</button>
                         </div>
                     </div>
                 </Fragment>
