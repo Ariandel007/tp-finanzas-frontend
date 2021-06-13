@@ -37,7 +37,7 @@ const ExpenseForm = ({ isFinal, expensesSelected, setExpensesSelected }) => {
     const [expenseSelectedToEditOrDelete, setExpenseSelectedToEditOrDelete] = useState({
         isEffective: true,
         isFinal: isFinal,
-        value: '',
+        value: 0,
         idExpenseReason: 1,
         expenseReason: {
             id: 1,
@@ -48,7 +48,7 @@ const ExpenseForm = ({ isFinal, expensesSelected, setExpensesSelected }) => {
 
     const addExpenseHandler = () => {
 
-        if(expenseToAdd.value.trim() !== '') {
+        if(expenseToAdd.value !== '' && expenseToAdd.value != null || expenseToAdd.value != 0) {
             setExpensesSelected([
                 ...expensesSelected,
                 expenseToAdd
@@ -61,15 +61,16 @@ const ExpenseForm = ({ isFinal, expensesSelected, setExpensesSelected }) => {
     }
 
     const modifyExpenseToAddHandler = e => {
-        console.log(e.target.value);
-
-        console.log(e.target.name);
 
 
         let value = e.target.value;
 
         if (e.target.name == "isEffective") {
             value = value == "true" ? true : false;
+        }
+
+        if (e.target.name == "value") {
+            value = parseFloat(value);
         }
 
         setExpenseToAdd({

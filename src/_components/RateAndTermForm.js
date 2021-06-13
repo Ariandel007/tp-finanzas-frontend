@@ -36,20 +36,10 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
         {id: 9, name: 'Especial', numberDays: 1}
     ]
 
-    const [rateTermSelected, setRateTermSelected] = useState({id: 8, name: 'Anual', numberDays: 360});
+    // const [rateTermSelected, setRateTermSelected] = useState({id: 8, name: 'Anual', numberDays: 360});
 
-    const onSelectRateTermHandler = e => {
-        const rateTermSelectedInList = rateTerms.find(r => r.id == e.target.value);
-        setRateTermSelected(rateTermSelectedInList)
-    }
+    
 
-    const onChangeRateTermDays = e => {
-        setRateTermSelected({
-            ...rateTermSelected,
-            numberDays: e.target.value
-        });
-    }
-////
     const [compoundingPeriodSelected, setCompoundingPeriodSelected] = useState({id: 8, name: 'Anual', numberDays: 360});
 
     const onSelectCompoundingPeriodHandler = e => {
@@ -64,15 +54,76 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
         });
     }
 
-    ///
 
+    
     const changeView = stage => setdataView({
         ...dataView,
         title: 'Costes/Gastos',
         stage: stage
     });
 
-    
+    const onChangeCommercialYear = e => {
+        setReceiptFormData({
+            ...receiptFormData,
+            rate: {
+                ...receiptFormData.rate,
+                [e.target.name]: e.target.value === "true" ? true : false,
+            }
+        });
+    }
+
+    const onChangeRateInput = e => {
+        setReceiptFormData({
+            ...receiptFormData,
+            rate: {
+                ...receiptFormData.rate,
+                [e.target.name]: parseFloat(e.target.value),
+            }
+        });
+    }
+
+    const onChangeRateTermObject = rateTermObj => {
+        setReceiptFormData({
+            ...receiptFormData,
+            rateTerm: rateTermObj
+        })
+    }
+
+    // const onChangeRateTermAttribute = e => {
+    //     setReceiptFormData({
+    //         ...receiptFormData,
+    //         rateTerm: {
+    //             ...receiptFormData.rateTerm,
+    //             [e.target.name]: e.target.value
+    //         } 
+    //     })
+    // }
+
+    const onSelectRateTermHandler = e => {
+        const rateTermSelectedInList = rateTerms.find(r => r.id == e.target.value);
+        // setRateTermSelected(rateTermSelectedInList);
+        onChangeRateTermObject(rateTermSelectedInList);
+    }
+
+    const onChangeRateTermDays = e => {
+        setReceiptFormData({
+            ...receiptFormData,
+            rateTerm: {
+                ...receiptFormData.rateTerm,
+                numberDays: parseInt(e.target.value)
+            } 
+        })
+    }
+
+    const onRateDateDiscount = dateDiscount => {
+        setReceiptFormData({
+            ...receiptFormData,
+            rate: {
+                ...receiptFormData.rate,
+                discountDate: dateDiscount
+            }
+        });
+    }
 
     return (
         <div className="card card-data-form p-4">
@@ -85,9 +136,9 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                 <div className="form-group row">
                     <label className="col-sm-4 col-form-label"><strong>(DA) Días por año</strong></label>
                     <div className="col-sm-8">
-                        <select className="form-control">
-                            <option>365 días</option>
-                            <option>360 días</option>
+                        <select className="form-control" name="isCommercialYear" value={receiptFormData.rate.isCommercialYear} onChange={onChangeCommercialYear}>
+                            <option value={true}>360 días</option>
+                            <option value={false}>365 días</option>
                         </select>
                     </div>
                 </div>
@@ -95,21 +146,21 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                 <div className="form-group row">
                     <label className="col-sm-4 col-form-label"><strong>(PT) Plazo de Tasa</strong></label>
                     <div className="col-sm-4">
-                        <select className="form-control" onChange={onSelectRateTermHandler} value={rateTermSelected.id}>
+                        <select className="form-control" onChange={onSelectRateTermHandler} value={receiptFormData.rateTerm.id}>
                             {
                                 rateTerms.map(rateTerm => (<option key={rateTerm.id} value={rateTerm.id}> {rateTerm.name} </option>))
                             }
                         </select>
                     </div>
                     <div className="col-sm-4">
-                        <input disabled={rateTermSelected.id != 9} type="text" className="form-control" id="retainage" name="numberDays" value={rateTermSelected.numberDays} onChange={onChangeRateTermDays}/>
+                        <input disabled={receiptFormData.rateTerm.id != 9} type="text" className="form-control" id="retainage" name="numberDays" value={receiptFormData.rateTerm.numberDays} onChange={onChangeRateTermDays}/>
                     </div>
                 </div>
 
                 <div className="form-group row">
                     <label className="col-sm-4 col-form-label"><strong>{receiptFormData.rate.isNominal? '(TN) Tasa Nominal' : '(TE) Tasa Efectiva'}</strong></label>
                     <div className="col-sm-6">
-                        <input type="text" className="form-control" id="percentage" name="percentage"/>
+                        <input type="text" className="form-control" id="percentage" name="percentage" value={receiptFormData.rate.percentage} onChange={onChangeRateInput}/>
                     </div>
                     <div className="col-sm-2">
                         <input type="text" readOnly className="form-control-plaintext" value="%"/>
@@ -129,7 +180,7 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                             </select>
                         </div>
                         <div className="col-sm-4">
-                            <input disabled={compoundingPeriodSelected.id != 9} type="text" className="form-control" id="retainage" name="numberDays" value={compoundingPeriodSelected.numberDays} onChange={onChangeSelectCompoundingPeriod}/>
+                            <input disabled={compoundingPeriodSelected.name !== 9} type="text" className="form-control" id="retainage" name="numberDays" value={compoundingPeriodSelected.numberDays} onChange={onChangeSelectCompoundingPeriod}/>
                         </div>
                     </div>
                     )
@@ -140,7 +191,7 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                 <div className="form-group row">
                     <label htmlFor="dateOfIssue" className="col-sm-4 col-form-label"><strong>(FD) Fecha de Descuento</strong></label>
                     <div className="col-sm-8">
-                        <DayPickerInput inputProps={{ style: style }}  onDayChange={day => console.log(day)} />
+                        <DayPickerInput inputProps={{ style: style }} value={receiptFormData.rate.discountDate} onDayChange={day => onRateDateDiscount(day)} />
                     </div>
                 </div>
 

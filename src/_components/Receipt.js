@@ -4,6 +4,7 @@ import RateAndTermForm from "./RateAndTermForm";
 import ReceiptGeneralData from "./ReceiptGeneralData";
 import SelectRate from "./SelectRate";
 import Results from "./Results";
+import calculateResults from "../utils/calculateResults";
 
 const Receipt = () => {
 
@@ -18,17 +19,18 @@ const Receipt = () => {
         name: '',
         retainage: 0.0,
         totalValue: 0.0,
-        paymentDate: 0.0,
-        dateOfIssue: '',
+        paymentDate: new Date(),
+        dateOfIssue: new Date(),
         rate: {
-            isCommercialYear: false,
+            isCommercialYear: true,
             isNominal: false,
-            percentage: true
+            percentage: 0,
+            discountDate: new Date()
         },
         rateTerm: {
-            id: 0,
-            name: '',
-            numberDays: 0,
+            id: 8,
+            name: 'Anual',
+            numberDays: 360
         },
         compoundingPeriod: {
             id: 0,
@@ -51,17 +53,18 @@ const Receipt = () => {
             name: '',
             retainage: 0.0,
             totalValue: 0.0,
-            paymentDate: 0.0,
-            dateOfIssue: '',
+            paymentDate: new Date(),
+            dateOfIssue: new Date(),
             rate: {
-                isCommercialYear: false,
+                isCommercialYear: true,
                 isNominal: false,
-                percentage: true
+                percentage: 0,//cuando se envie se debe poner entre 100
+                discountDate: new Date()
             },
             rateTerm: {
-                id: 0,
-                name: '',
-                numberDays: 0,
+                id: 8,
+                name: 'Anual',
+                numberDays: 360
             },
             compoundingPeriod: {
                 id: 0,
@@ -78,14 +81,19 @@ const Receipt = () => {
             stage: 0
         });
 
+        setExpensesSelectedStart([]);
+        setExpensesSelectedEnd([]);
     }
 
+    const [calculateReceipt, setCalculateReceipt] = useState({});
+
     useEffect(()=> {
-        console.log('Es nominal', receiptFormData.rate.isNominal);
-        console.log('Stage', dataView.stage);
-        console.log('receiptFormData', receiptFormData);
+        if (dataView.stage === 3) {
+            const calc = calculateResults(receiptFormData);
+            setCalculateReceipt(calc);
+        }
     },
-    [receiptFormData.rate.isNominal, dataView.stage, receiptFormData]);
+    [dataView.stage, receiptFormData]);
 
     const showResults = () => {
 
@@ -115,7 +123,7 @@ const Receipt = () => {
             return (
                 <Fragment>
                     <div className="col-12 col-lg-6">
-                        <ReceiptGeneralData/>
+                        <ReceiptGeneralData receiptFormData={receiptFormData} setReceiptFormData={setReceiptFormData}/>
                     </div>
 
                     <div className="col-12 col-lg-6">
@@ -166,7 +174,7 @@ const Receipt = () => {
             return (
                 <Fragment>
                     <div className="col-12">
-                        <Results/>
+                        <Results calculateReceipt={calculateReceipt}/>
                     </div>
 
                     <div className="col-12">
