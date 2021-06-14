@@ -49,10 +49,6 @@ const calculateResults = (receiptFormData) => {
         const n = receiptFormData.rateTerm.numberDays/receiptFormData.compoundingPeriod.numberDays;
         ratePercentage = Math.pow((1 + (tn/m)), n) - 1;
         result.ratePercentage = (ratePercentage*100).toFixed(7) + '%';
-        console.log('compoundingPeriod.numberDays', receiptFormData.compoundingPeriod.numberDays);
-        console.log('tn', tn);
-        console.log('m', m);
-        console.log('n', n);
     }
 
     // CALCULAMOS EL NUMERO DE DIAS TRANSCURRIDOS

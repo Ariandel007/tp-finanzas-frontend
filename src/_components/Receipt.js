@@ -5,6 +5,7 @@ import ReceiptGeneralData from "./ReceiptGeneralData";
 import SelectRate from "./SelectRate";
 import Results from "./Results";
 import calculateResults from "../utils/calculateResults";
+import ModalSave from "./ModalSave";
 
 const Receipt = () => {
 
@@ -14,6 +15,9 @@ const Receipt = () => {
     });
 
     const [receiptFormData, setReceiptFormData] = useState({
+        name: '',
+        description: '',
+        createDate: '',
         isDolar: false,
         description: '',
         name: '',
@@ -48,6 +52,9 @@ const Receipt = () => {
 
     const resetFormData = () => {
         setReceiptFormData({
+            name: '',
+            description: '',
+            createDate: '',
             isDolar: false,
             description: '',
             name: '',
@@ -117,6 +124,17 @@ const Receipt = () => {
         stage: 1
     });
 
+    const [showModal, setShowModal] = useState({display: "none"});
+
+    const changeModal = () => {
+        if (showModal.display === "none") {
+            setShowModal({display: "block"});
+        } else {
+            setShowModal({display: "none"});
+        }
+    }
+
+
     const contentPage = () => {
 
         if (dataView.stage == 0) {
@@ -179,10 +197,13 @@ const Receipt = () => {
 
                     <div className="col-12">
                         <div className="d-flex justify-content-center mt-3">
-                            <button type="button" className="btn btn-primary mr-3">Guardar</button>
-                            <button type="button" className="btn btn-primary ml-3" onClick={resetFormData} >Nuevo</button>
+                            <button onClick={changeModal} type="button" className="btn btn-primary mr-3">Guardar</button>
+                            <button type="button" className="btn btn-primary ml-3" onClick={resetFormData}>Nuevo</button>
                         </div>
                     </div>
+
+                    <ModalSave setReceiptFormData={setReceiptFormData} receiptFormData={receiptFormData} showModal={showModal} changeModal={changeModal}></ModalSave>
+                    
                 </Fragment>
             );
         }

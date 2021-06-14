@@ -4,6 +4,8 @@ import './App.scss';
 import Home from './_components/Home';
 import SignUp from './_components/SignUp';
 import Receipt from './_components/Receipt';
+import Historial from './_components/Historial';
+
 
 //REDUX
 import { Provider } from 'react-redux';
@@ -29,6 +31,7 @@ function App() {
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/sign-up" component={SignUp}></Route>
           <Route exact path="/receipt" component={Receipt}></Route>
+          <Route exact path="/historial" component={Historial}></Route>
         </Switch>
 
         <div id="mySidenav" className="sidenav" ref={sideNavRef}>
@@ -37,6 +40,7 @@ function App() {
           <Link className="header-title my-2 colornav" to={'/historial'} onClick={closeSideNav}>Historial</Link>
           <Link className="header-title my-2 colornav" to={'/'}  onClick={closeSideNav}>Cerrar Sesión</Link>
         </div>
+
       </div>
 
       </Provider>
