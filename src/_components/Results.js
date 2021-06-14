@@ -10,7 +10,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(TEA) Tasa Efectiva Anual (sin costes)</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.ratePercentage}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.ratePercentage}/>
                                 </div>
                             </div>
                         </div>
@@ -19,7 +19,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(CI) Costes Iniciales Totales</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.sumExpensesStart}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.sumExpensesStart}/>
                                 </div>
                             </div>
                         </div>
@@ -34,7 +34,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(ND) Número de días transcurridos</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.daysPassed}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.daysPassed}/>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(VNET) Valor Neto</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.netWorth}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.netWorth}/>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(TE) Tasa Efectiva a ND días</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.rateByDays}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.rateByDays}/>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(VR) Valor Total a Recibir</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.totalValueToReceive}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.totalValueToReceive}/>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(d) Tasa Descontada a ND días</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.discountedRate}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.discountedRate}/>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +92,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(CF) Costes Finales Totales</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.sumExpensesEnd}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.sumExpensesEnd}/>
                                 </div>
                             </div>
                         </div>
@@ -108,7 +108,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(D) Descuento</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.discount}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.discount}/>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(VE) Valor Total a Entregar</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.totalValueToDeliver}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.totalValueToDeliver}/>
                                 </div>
                             </div>
                         </div>
@@ -132,7 +132,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(Rt) Retención</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.retainage}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.retainage}/>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@ const Results = ({ calculateReceipt }) => {
                             <div className="form-group row">
                                 <label className="col-6 col-form-label"><strong>(TCEA) Tasa de Coste Efectiva Anual</strong></label>
                                 <div className="col-6">
-                                    <input type="text" className="form-control" value={calculateReceipt.tcea}/>
+                                    <input type="text" readOnly className="form-control" value={calculateReceipt.tcea}/>
                                 </div>
                             </div>
                         </div>

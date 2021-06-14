@@ -34,76 +34,105 @@ const calculateResults = (receiptFormData) => {
 
     const daysAtYear = receiptFormData.rate.isCommercialYear ? 360 : 365;
 
+    // MOSTRAMOS LA TEA
+
+    let rateFixed = 0;
+    let ratePercentage = 0;
     if (receiptFormData.rate.isNominal == false) {
-        // MOSTRAMOS LA TEA
-        const rateFixed = receiptFormData.rate.percentage * (1/100)
-        const ratePercentage = Math.pow((1 + rateFixed), daysAtYear/receiptFormData.rateTerm.numberDays) - 1;
+        rateFixed = receiptFormData.rate.percentage * (1/100)
+        ratePercentage = Math.pow((1 + rateFixed), daysAtYear/receiptFormData.rateTerm.numberDays) - 1;
+        result.ratePercentage = (ratePercentage*100).toFixed(7) + '%';    
+    } else {
+        rateFixed = receiptFormData.rate.percentage * (1/100);
+        const tn = rateFixed;
+        const m = daysAtYear/receiptFormData.compoundingPeriod.numberDays;
+        const n = receiptFormData.rateTerm.numberDays/receiptFormData.compoundingPeriod.numberDays;
+        ratePercentage = Math.pow((1 + (tn/m)), n) - 1;
         result.ratePercentage = (ratePercentage*100).toFixed(7) + '%';
+        console.log('compoundingPeriod.numberDays', receiptFormData.compoundingPeriod.numberDays);
+        console.log('tn', tn);
+        console.log('m', m);
+        console.log('n', n);
+    }
 
-        // CALCULAMOS EL NUMERO DE DIAS TRANSCURRIDOS
-          
-        const DifferenceInTime = receiptFormData.paymentDate.getTime() - receiptFormData.rate.discountDate.getTime();
-          
-        const daysPassed = DifferenceInTime / (1000 * 3600 * 24);
+    // CALCULAMOS EL NUMERO DE DIAS TRANSCURRIDOS
+      
+    const DifferenceInTime = receiptFormData.paymentDate.getTime() - receiptFormData.rate.discountDate.getTime();
+      
+    const daysPassed = DifferenceInTime / (1000 * 3600 * 24);
 
-        result.daysPassed = daysPassed;
+    result.daysPassed = daysPassed;
 
-        // CALCULAMOS LA TASA EFECTIVA SEGUN LOS DIAS TRANSCURRIDOS
+    // CALCULAMOS LA TASA EFECTIVA SEGUN LOS DIAS TRANSCURRIDOS
 
-        const tep2 = Math.pow((1 + ratePercentage), daysPassed/360) - 1;
+    const tep2 = Math.pow((1 + ratePercentage), daysPassed/360) - 1;
 
-        result.rateByDays = (tep2*100).toFixed(7) + '%';
+    result.rateByDays = (tep2*100).toFixed(7) + '%';
 
-        // CALCULAMOS LA TASA DESCONTADA SEGUN LOS DIAS TRANSCURRIDOS
-        const discountedRate = (tep2)/(1 + tep2);
+    // CALCULAMOS LA TASA DESCONTADA SEGUN LOS DIAS TRANSCURRIDOS
+    const discountedRate = (tep2)/(1 + tep2);
 
-        result.discountedRate = (discountedRate*100).toFixed(7) + '%';
+    result.discountedRate = (discountedRate*100).toFixed(7) + '%';
 
-        //CALCULAMOS EL DESCUENTO
-        const totalValue = receiptFormData.totalValue;
-        const discount = totalValue*discountedRate;
+    //CALCULAMOS EL DESCUENTO
+    const totalValue = receiptFormData.totalValue;
+    const discount = totalValue*discountedRate;
 
-        result.discount = discount.toFixed(2);
-
-
-        //RETENCION
-        const retainage = receiptFormData.retainage;
-        result.retainage = retainage.toFixed(2);
+    result.discount = discount.toFixed(2);
 
 
-        // SUMA DE GASTOS INICIALES TOTALES
-        const expensesStart = receiptFormData.expenses.filter(x => x.isFinal == false);
-        const expensesEnd = receiptFormData.expenses.filter(x => x.isFinal == true);
+    //RETENCION
+    const retainage = receiptFormData.retainage;
+    result.retainage = retainage.toFixed(2);
 
-        const sumExpensesStart = expensesStart.reduce((accumulator, currentValue) =>  accumulator + currentValue.value, 0);
 
-        result.sumExpensesStart = sumExpensesStart.toFixed(2);
+    // SUMA DE GASTOS INICIALES TOTALES
+    const expensesStart = receiptFormData.expenses.filter(x => x.isFinal == false);
+    const expensesEnd = receiptFormData.expenses.filter(x => x.isFinal == true);
 
-        //VALOR NETO
-        const netWorth = totalValue - discount;
+    const sumExpensesStart = expensesStart.reduce((accumulator, currentValue) =>  {
+        if(currentValue.isEffective) {
+            const reseff = accumulator + currentValue.value
+            return reseff;
+        } else {
+            const respercen = accumulator + totalValue*currentValue.value/100
+            return respercen;
+        }
+    }, 0);
 
-        result.netWorth = netWorth.toFixed(2);
+    result.sumExpensesStart = sumExpensesStart.toFixed(2);
 
-        // VALOR TOTAL A RECIBIR
-        const totalValueToReceive = netWorth -retainage - sumExpensesStart;
-        result.totalValueToReceive = totalValueToReceive.toFixed(2);
+    //VALOR NETO
+    const netWorth = totalValue - discount;
 
-        //SUMA DE GASTOS FINALES TOTALES
-        const sumExpensesEnd = expensesEnd.reduce((accumulator, currentValue) =>  accumulator + currentValue.value, 0);
-        result.sumExpensesEnd = sumExpensesEnd.toFixed(2);
+    result.netWorth = netWorth.toFixed(2);
 
-        // VALOR TOTAL A ENTREGAR
-        const totalValueToDeliver = totalValue - retainage + sumExpensesEnd;
-        result.totalValueToDeliver = totalValueToDeliver.toFixed(2);
+    // VALOR TOTAL A RECIBIR
+    const totalValueToReceive = netWorth -retainage - sumExpensesStart;
+    result.totalValueToReceive = totalValueToReceive.toFixed(2);
 
-        // CALCULAR EL COSTE EFECTIVO ANUAL
-        const tcea = Math.pow((parseFloat(totalValueToDeliver.toFixed(2))/parseFloat(totalValueToReceive.toFixed(2))), daysAtYear/daysPassed) - 1;
-        result.tcea = (tcea*100).toFixed(7) + '%';;
+    //SUMA DE GASTOS FINALES TOTALES
+    const sumExpensesEnd = expensesEnd.reduce((accumulator, currentValue) =>  {
+        if(currentValue.isEffective) {
+            const reseff = accumulator + currentValue.value
+            return reseff;
+        } else {
+            const respercen = accumulator + totalValue*currentValue.value/100
+            return respercen;
+        }
+    }, 0);
+    
+    result.sumExpensesEnd = sumExpensesEnd.toFixed(2);
 
-        return result;
-    } 
+    // VALOR TOTAL A ENTREGAR
+    const totalValueToDeliver = totalValue - retainage + sumExpensesEnd;
+    result.totalValueToDeliver = totalValueToDeliver.toFixed(2);
 
-    return {}
+    // CALCULAR EL COSTE EFECTIVO ANUAL
+    const tcea = Math.pow((parseFloat(totalValueToDeliver.toFixed(2))/parseFloat(totalValueToReceive.toFixed(2))), daysAtYear/daysPassed) - 1;
+    result.tcea = (tcea*100).toFixed(7) + '%';;
+
+    return result;
 }
 
 export default calculateResults;

@@ -36,22 +36,24 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
         {id: 9, name: 'Especial', numberDays: 1}
     ]
 
-    // const [rateTermSelected, setRateTermSelected] = useState({id: 8, name: 'Anual', numberDays: 360});
-
-    
-
-    const [compoundingPeriodSelected, setCompoundingPeriodSelected] = useState({id: 8, name: 'Anual', numberDays: 360});
 
     const onSelectCompoundingPeriodHandler = e => {
         const compoundingPeriodSelectedList = compoundingPeriods.find(r => r.id == e.target.value);
-        setCompoundingPeriodSelected(compoundingPeriodSelectedList)
+
+        setReceiptFormData({
+            ...receiptFormData,
+            compoundingPeriod: compoundingPeriodSelectedList
+        })
     }
 
     const onChangeSelectCompoundingPeriod = e => {
-        setCompoundingPeriodSelected({
-            ...compoundingPeriodSelected,
-            numberDays: e.target.value
-        });
+        setReceiptFormData({
+            ...receiptFormData,
+            compoundingPeriod: {
+                ...receiptFormData.compoundingPeriod,
+                numberDays: parseInt(e.target.value)
+            } 
+        })
     }
 
 
@@ -88,16 +90,6 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
             rateTerm: rateTermObj
         })
     }
-
-    // const onChangeRateTermAttribute = e => {
-    //     setReceiptFormData({
-    //         ...receiptFormData,
-    //         rateTerm: {
-    //             ...receiptFormData.rateTerm,
-    //             [e.target.name]: e.target.value
-    //         } 
-    //     })
-    // }
 
     const onSelectRateTermHandler = e => {
         const rateTermSelectedInList = rateTerms.find(r => r.id == e.target.value);
@@ -173,14 +165,14 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label"><strong>(PC) Periodo de Capital.</strong></label>
                         <div className="col-sm-4">
-                            <select className="form-control" onChange={onSelectCompoundingPeriodHandler} value={compoundingPeriodSelected.id}>
+                            <select className="form-control" onChange={onSelectCompoundingPeriodHandler} value={receiptFormData.compoundingPeriod.id}>
                                 {
                                     compoundingPeriods.map(compoundingPeriod => (<option key={compoundingPeriod.id} value={compoundingPeriod.id}> {compoundingPeriod.name} </option>))
                                 }
                             </select>
                         </div>
                         <div className="col-sm-4">
-                            <input disabled={compoundingPeriodSelected.name !== 9} type="text" className="form-control" id="retainage" name="numberDays" value={compoundingPeriodSelected.numberDays} onChange={onChangeSelectCompoundingPeriod}/>
+                            <input disabled={receiptFormData.compoundingPeriod.name !== 9} type="text" className="form-control" id="retainage" name="numberDays" value={receiptFormData.compoundingPeriod.numberDays} onChange={onChangeSelectCompoundingPeriod}/>
                         </div>
                     </div>
                     )
