@@ -1,0 +1,43 @@
+
+/*---SIDEBAR INICIO----*/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #c2cffa;
+    overflow-x: hidden;
+    transition: 0.2s;
+    // padding-top: 60px;
+  }
+    
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    font-size: 1rem;
+    text-decoration: none;
+    display: block;
+    transition: 0.2s;
+  }
+  
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+
+  
+  .closebtn {
+    /* font-size: 30px; */
+    color: white;
+    cursor: pointer;
+  }
+
+  .colornav {
+    color: #000000;
+  }
+
+  /**MENU ITEMS FIN**/
+  
+  .card-border {
+    border: none;
+  }
