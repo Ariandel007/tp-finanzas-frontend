@@ -19,8 +19,29 @@ function App() {
   const openSideNav = () => sideNavRef.current.style.width = "250px";
   const closeSideNav = () => sideNavRef.current.style.width = "0px";
 
+  const tokenExpired = (jwtbearer) => {
+    if (jwtbearer != null) {
+      const token = jwtbearer.replace("Bearer ", "");
+      const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+      return (Math.floor((new Date()).getTime() / 1000)) >= expiry;  
+    } else {
+      return true;
+    }
+  }
+
   const token =  localStorage.getItem('token-receipt');
-  tokenAuth(token);
+
+  const isExpiredToken = tokenExpired(token);
+
+  console.log('expired',isExpiredToken);
+
+  if (!isExpiredToken) {
+    tokenAuth(token);
+  } else {
+    localStorage.removeItem('token-receipt');
+    tokenAuth(null);
+  }
+
 
   return (
     <BrowserRouter>

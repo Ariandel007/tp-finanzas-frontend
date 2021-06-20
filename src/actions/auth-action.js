@@ -18,8 +18,10 @@ export function userLoginAction(user) {
         dispatch(login());
 
         try {
-            const res = await axiosClient.post('/user/login', user);
+            tokenAuth(null);
 
+            const res = await axiosClient.post('/user/login', user);
+            
             const responseLogin = res.data;
 
             tokenAuth(responseLogin.token);

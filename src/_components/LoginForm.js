@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLoginAction } from '../actions/auth-action';
@@ -9,6 +9,10 @@ const LoginForm = () => {
     const dispatch = useDispatch();
 
     const login = user => dispatch(userLoginAction(user));
+
+    const userLoged = useSelector(state => state.auth.user);
+
+    const isInitialMount = useRef(true);
 
     const history = useHistory();
 
@@ -26,12 +30,20 @@ const LoginForm = () => {
         });
     }
 
+    useEffect(() => {
+        if (isInitialMount.current) {
+           isInitialMount.current = false;
+        } else {
+            history.push('/historial');
+        }
+    }, [history, userLoged]);
+
     const isvalidForm = () => userLoginForm.username !== '' && userLoginForm.username !== null && userLoginForm.password !== '' && userLoginForm.password !== null
 
     const onLoginSubmit = e => {
         if(isvalidForm()) {
             login(userLoginForm);
-            history.push('/receipt');
+            // history.push('/receipt');
         }
     }
 

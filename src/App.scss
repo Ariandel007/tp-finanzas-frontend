@@ -41,3 +41,26 @@
   .card-border {
     border: none;
   }
+
+  .previous {
+    background-color: #6B0BE0;
+    color: white;
+  }
+  
+  .next {
+    background-color: #6B0BE0;
+    color: white;
+  }
+  
+  .roundPageButton {
+    text-decoration: none;
+    padding: 8px 16px;
+    border: none;
+  }
+
+  .roundPageButton:hover {
+    background-color: #C2CFFA;
+    color: black;
+    font-size: 13px;
+  }
+  

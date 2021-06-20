@@ -21,7 +21,12 @@ export function getPageReceiptAction(pagination) {
 
             const responsePagination = res.data;
 
-            dispatch(getPageSuccess(responsePagination.content));
+            const payloadToSend ={
+                totalPages: responsePagination.totalPages,
+                content: responsePagination.content
+            }
+
+            dispatch(getPageSuccess(payloadToSend));
 
         } catch (error) {
             dispatch(getPageError());
