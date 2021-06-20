@@ -11,6 +11,7 @@ import { tokenAuth } from './config/token';
 //REDUX
 import { Provider } from 'react-redux';
 import store from './store';
+import ViewReceipt from './_components/ViewReceipt';
 
 
 function App() {
@@ -33,7 +34,6 @@ function App() {
 
   const isExpiredToken = tokenExpired(token);
 
-  console.log('expired',isExpiredToken);
 
   if (!isExpiredToken) {
     tokenAuth(token);
@@ -56,6 +56,7 @@ function App() {
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/sign-up" component={SignUp}></Route>
           <Route exact path="/receipt" component={Receipt}></Route>
+          <Route exact path="/receiptselected/:idReceipt" component={ViewReceipt}></Route>
           <Route exact path="/historial" component={Historial}></Route>
         </Switch>
 

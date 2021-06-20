@@ -8,6 +8,9 @@ import {
     SAVE_RECEIPT,
     SAVE_RECEIPT_SUCCESS,
     SAVE_RECEIPT_ERROR,
+    GET_RECEIPT,
+    GET_RECEIPT_SUCCESS,
+    GET_RECEIPT_ERROR
 } from '../types';
 
 export function getPageReceiptAction(pagination) {
@@ -51,6 +54,23 @@ export function createReceipt(receiptToCreate) {
     }
 }
 
+export function getReceiptByIdAction(id) {
+    return async (dispatch) => {
+        dispatch(getReceiptById());
+
+        try {
+            const res = await axiosClient.get(`/receipt/findOneOfMyReceiptsById/${id}`);
+
+            const receiptToCalculate = res.data;
+
+            dispatch(getReceiptByIdSuccess(receiptToCalculate));
+
+        } catch (error) {
+            dispatch(getReceiptByIdError());
+        }
+    }
+}
+
 
 // GET PAGE RECEIPT
 const getPage = () => ({
@@ -66,6 +86,7 @@ const getPageError = () => ({
     type: LIST_RECEIPTS_ERROR
 });
 
+
 // CREATE RECEIPT
 const saveReceipt = () => ({
     type: SAVE_RECEIPT
@@ -78,4 +99,19 @@ const saveReceiptSuccess = (receiptToSave) => ({
 
 const saveReceiptError = () => ({
     type: SAVE_RECEIPT_ERROR
+});
+
+
+// GET RECEIPT BY ID
+const getReceiptById = () => ({
+    type: GET_RECEIPT
+});
+
+const getReceiptByIdSuccess = (receipt) => ({
+    type: GET_RECEIPT_SUCCESS,
+    payload: receipt
+});
+
+const getReceiptByIdError = () => ({
+    type: GET_RECEIPT_ERROR
 });

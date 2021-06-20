@@ -4,8 +4,10 @@ import {
     SAVE_RECEIPT_ERROR,
     LIST_RECEIPTS,
     LIST_RECEIPTS_SUCCESS,
-    LIST_RECEIPTS_ERROR
-
+    LIST_RECEIPTS_ERROR,
+    GET_RECEIPT,
+    GET_RECEIPT_SUCCESS,
+    GET_RECEIPT_ERROR
 } from '../types';
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
 export default function(state = initialState, action) {
     switch (action.type) {
         case SAVE_RECEIPT:
+        case GET_RECEIPT:
         case LIST_RECEIPTS:
             return {
                 ...state,
@@ -35,6 +38,7 @@ export default function(state = initialState, action) {
         
         case SAVE_RECEIPT_ERROR:
         case LIST_RECEIPTS_ERROR:
+        case GET_RECEIPT_ERROR:
             return {
                 ...state,
                 loading: false
@@ -45,6 +49,12 @@ export default function(state = initialState, action) {
                 loading: false,
                 receiptList: action.payload.content,
                 totalPages: action.payload.totalPages
+            }
+        case GET_RECEIPT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                receiptSelected: action.payload
             }
 
         default:

@@ -27,6 +27,7 @@ const ModalSave = ({ showModal, changeModal, receiptFormData, setReceiptFormData
     }
 
     const saveReceipt = () => {
+        console.log(receiptFormData);
         saveReceiptAction(receiptFormData);
         setLoading(true);
     }

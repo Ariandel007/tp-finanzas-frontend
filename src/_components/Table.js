@@ -1,13 +1,18 @@
 import { sort, ascending } from "d3-array";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getPageReceiptAction } from "../actions/receipt-action";
 
 const Table = () => {
 
+    const history = useHistory();
+
     const receiptsToList = useSelector(state => state.receipt.receiptList);
     const loading = useSelector(state => state.receipt.loading);
     const totalPages = useSelector(state => state.receipt.totalPages);    
+
+    const goToReceiptSelected = useCallback(id => history.push(`receiptselected/${id}`), [history]);
 
 
     const dispatch = useDispatch();
@@ -54,6 +59,8 @@ const Table = () => {
         const day = date.getDate();
         return day.toString() + '/' + month.toString() + '/' + year.toString();
     }
+
+
 
     useEffect(() => {
         //getReceipts(currentPage);
@@ -111,7 +118,7 @@ const Table = () => {
                 {
                     receiptsToList.map(
                         receipInList => 
-                        <tr key={receipInList.id}>
+                        <tr key={receipInList.id} onClick={()=>goToReceiptSelected(receipInList.id)}>
                             <td>{receipInList.name}</td>
                             <td>{receipInList.description}</td>
                             <td>{formatDate(receipInList.createDate)}</td>
