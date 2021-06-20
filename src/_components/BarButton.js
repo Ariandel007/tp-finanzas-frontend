@@ -6,8 +6,9 @@ const BarButton = ({openSideNav, token, setToken}) => {
     const location = useLocation();
 
     useEffect(() => {
+        console.log('hello there');
         setToken(localStorage.getItem('token-receipt'));
-    }, [location]);
+    }, [location, setToken]);
 
     return (
         <div className="col-2 selectable">

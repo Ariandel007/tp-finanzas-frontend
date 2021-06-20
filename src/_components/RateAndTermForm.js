@@ -1,6 +1,12 @@
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import '../picker.scss'
-import { useState } from "react"
+
+import MomentLocaleUtils, {
+  formatDate,
+  parseDate,
+} from 'react-day-picker/moment';
+
+import 'moment/locale/es';
 
 const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFormData }) => {
 
@@ -47,22 +53,45 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
     }
 
     const onChangeSelectCompoundingPeriod = e => {
+        let value = e.target.value.toString();
+
+        if (value.length == 0) {
+            value = '1';
+        }
+        
         setReceiptFormData({
             ...receiptFormData,
             compoundingPeriod: {
                 ...receiptFormData.compoundingPeriod,
-                numberDays: parseInt(e.target.value)
+                numberDays: parseInt(value)
             } 
         })
     }
 
-
+    const isValid = () => {
+        const  valid = receiptFormData.compoundingPeriod.numberDays > 0 && receiptFormData.rate.percentage > 0 && receiptFormData.rateTerm.numberDays > 0;
+        return valid;
+    }
     
-    const changeView = stage => setdataView({
-        ...dataView,
-        title: 'Costes/Gastos',
-        stage: stage
-    });
+    const changeView = stage => {
+        if (stage == 2) {
+            if(isValid()) {
+                setdataView({
+                    ...dataView,
+                    title: 'Costes/Gastos',
+                    stage: stage
+                });
+            }
+        } else {
+            setdataView({
+                ...dataView,
+                title: 'Costes/Gastos',
+                stage: stage
+            });
+        }
+        
+        
+    }
 
     const onChangeCommercialYear = e => {
         setReceiptFormData({
@@ -75,11 +104,27 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
     }
 
     const onChangeRateInput = e => {
+
+        let value = e.target.value;
+
+        value = value.toString();
+
+        if (value.length > 0) {
+            if(value.charAt(value.length - 1) == ".") {
+                console.log('termina en punto');
+            } else {
+                value = parseFloat(value);
+                if (isNaN(value)) {
+                    value='';
+                }
+            }
+        }
+
         setReceiptFormData({
             ...receiptFormData,
             rate: {
                 ...receiptFormData.rate,
-                [e.target.name]: parseFloat(e.target.value),
+                [e.target.name]: value,
             }
         });
     }
@@ -98,6 +143,12 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
     }
 
     const onChangeRateTermDays = e => {
+        let value = e.target.value.toString();
+
+        if (value.length == 0) {
+            value = '1';
+        }
+
         setReceiptFormData({
             ...receiptFormData,
             rateTerm: {
@@ -115,6 +166,12 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                 discountDate: dateDiscount
             }
         });
+    }
+
+    const limitDatesInPicker = () => {
+        const dt = new Date(receiptFormData.paymentDate.getTime());
+        dt.setDate( dt.getDate() - 1 );
+        return dt;
     }
 
     return (
@@ -145,7 +202,7 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                         </select>
                     </div>
                     <div className="col-sm-4">
-                        <input disabled={receiptFormData.rateTerm.id != 9} type="text" className="form-control" id="retainage" name="numberDays" value={receiptFormData.rateTerm.numberDays} onChange={onChangeRateTermDays}/>
+                        <input disabled={receiptFormData.rateTerm.name !== 'Especial'} type="text" className="form-control" id="retainage" name="numberDays" value={receiptFormData.rateTerm.numberDays} onChange={onChangeRateTermDays}/>
                     </div>
                 </div>
 
@@ -172,7 +229,7 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                             </select>
                         </div>
                         <div className="col-sm-4">
-                            <input disabled={receiptFormData.compoundingPeriod.name !== 9} type="text" className="form-control" id="retainage" name="numberDays" value={receiptFormData.compoundingPeriod.numberDays} onChange={onChangeSelectCompoundingPeriod}/>
+                            <input disabled={receiptFormData.compoundingPeriod.name !== 'Especial'} type="text" className="form-control" id="retainage" name="numberDays" value={receiptFormData.compoundingPeriod.numberDays} onChange={onChangeSelectCompoundingPeriod}/>
                         </div>
                     </div>
                     )
@@ -183,7 +240,16 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                 <div className="form-group row">
                     <label htmlFor="dateOfIssue" className="col-sm-4 col-form-label"><strong>(FD) Fecha de Descuento</strong></label>
                     <div className="col-sm-8">
-                        <DayPickerInput inputProps={{ style: style }} value={receiptFormData.rate.discountDate} onDayChange={day => onRateDateDiscount(day)} />
+                        <DayPickerInput
+                        formatDate={formatDate}
+                        parseDate={parseDate}
+                         dayPickerProps={{
+                            disabledDays: {
+                                locale: 'es',
+                                localeUtils: MomentLocaleUtils,
+                                after: limitDatesInPicker(),
+                            },
+                        }} inputProps={{ style: style }} value={receiptFormData.rate.discountDate} onDayChange={day => onRateDateDiscount(day)} />
                     </div>
                 </div>
 

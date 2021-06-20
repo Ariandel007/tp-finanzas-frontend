@@ -68,7 +68,7 @@ const LoginForm = () => {
                 </div>
 
                 <div className="d-flex justify-content-center mt-3 mb-5">
-                    <button onClick={onLoginSubmit} disabled={!isvalidForm()} type="button" className="btn btn-primary">
+                    <button onClick={onLoginSubmit} disabled={!isvalidForm() || userIsLoading} type="button" className="btn btn-primary">
                         {userIsLoading? <span className="spinner-grow spinner-grow-sm"></span>: null}
                         Ingresar
                     </button>

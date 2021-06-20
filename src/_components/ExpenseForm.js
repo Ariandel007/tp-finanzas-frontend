@@ -70,6 +70,10 @@ const ExpenseForm = ({ isFinal, expensesSelected, setExpensesSelected }) => {
         }
 
         if (e.target.name == "value") {
+
+            if (value.length == 0) {
+                value = '1';
+            }
             value = parseFloat(value);
         }
 

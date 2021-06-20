@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userRegisterAction } from '../actions/auth-action';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const SignUpForm = () => {
     const userIsLoading = useSelector(state => state.auth.loading);
@@ -9,6 +9,10 @@ const SignUpForm = () => {
     const dispatch = useDispatch();
 
     const history = useHistory();
+
+    const isInitialMount = useRef(true);
+
+    const userLoged = useSelector(state => state.auth.user);
 
     const register = user => dispatch(userRegisterAction(user));
 
@@ -33,9 +37,16 @@ const SignUpForm = () => {
     const onSignUpSubmit = e => {
         if(isvalidForm()) {
             register(userRegisterForm);
-            history.push('/receipt');
         }
     }
+
+    useEffect(() => {
+        if (isInitialMount.current) {
+           isInitialMount.current = false;
+        } else {
+            history.push('/historial');
+        }
+    }, [history, userLoged]);
 
 
     return (
@@ -63,7 +74,7 @@ const SignUpForm = () => {
                     </div>
                 </div>
                 <div className="d-flex justify-content-center mt-3 mb-5">
-                    <button type="button" className="btn btn-primary" onClick={onSignUpSubmit}>
+                    <button disabled={!isvalidForm() && userIsLoading} type="button" className="btn btn-primary" onClick={onSignUpSubmit}>
                         {userIsLoading? <span className="spinner-grow spinner-grow-sm"></span>: null}
                         Registrarse
                     </button>

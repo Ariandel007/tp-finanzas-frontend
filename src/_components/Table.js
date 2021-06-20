@@ -72,8 +72,8 @@ const Table = () => {
             {
                 loading ?
                 <div className="d-flex justify-content-center">
-                    <div class="spinner-grow text-primary" role="status">
-                        <span class="sr-only">Loading...</span>
+                    <div className="spinner-grow text-primary" role="status">
+                        <span className="sr-only">Loading...</span>
                     </div>
                 </div>
                 :
@@ -137,12 +137,12 @@ const Table = () => {
                         {currentPage.page === 0 ? 
                             null
                             :
-                            <button onClick={prevPage} button="button" class="previous roundPageButton">&#8249;</button>
+                            <button onClick={prevPage} button="button" className="previous roundPageButton">&#8249;</button>
                         }
-                        {totalPages - 1 === currentPage.page? 
+                        {totalPages - 1 === currentPage.page || totalPages === 0? 
                             null
                             :
-                            <button onClick={nextPage} button="button" class="next roundPageButton">&#8250;</button>
+                            <button onClick={nextPage} button="button" className="next roundPageButton">&#8250;</button>
                         }
                         
                     </div>

@@ -1,6 +1,14 @@
-import { useState } from 'react';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { useEffect, useState } from 'react';
 import '../picker.scss'
+
+import MomentLocaleUtils, {
+  formatDate,
+  parseDate,
+} from 'react-day-picker/moment';
+
+import 'moment/locale/es';
+
 
 const ReceiptGeneralData = ({ receiptFormData, setReceiptFormData }) => {
 
@@ -20,8 +28,20 @@ const ReceiptGeneralData = ({ receiptFormData, setReceiptFormData }) => {
     }
     const onChangeInput = e => {
         let name = e.target.name;
-        let value = parseFloat(e.target.value);
-        
+        let value = e.target.value;
+
+        value = value.toString();
+
+        if (value.length > 0) {
+            if(value.charAt(value.length - 1) == ".") {
+                console.log('termina en punto');
+            } else {
+                value = parseFloat(value);
+                if (isNaN(value)) {
+                    value='';
+                }
+            }
+        }
 
         changeAttribute(name, value);
     }
@@ -35,6 +55,18 @@ const ReceiptGeneralData = ({ receiptFormData, setReceiptFormData }) => {
 
     const checkActive = (moneyConditional) =>  moneyConditional? 'active' : '';
 
+    useEffect(() => {
+        if (receiptFormData.totalValue >= 1500) {
+            const newValue = receiptFormData.totalValue*0.08;
+            setReceiptFormData({
+                ...receiptFormData,
+                retainage: newValue
+            })
+        }
+        ;
+    }, [receiptFormData.totalValue]);
+    
+
     return (
         <div className="card card-data-form p-4">
 
@@ -45,14 +77,26 @@ const ReceiptGeneralData = ({ receiptFormData, setReceiptFormData }) => {
                 <div className="form-group row">
                     <label htmlFor="dateOfIssue" className="col-sm-4 col-form-label"><strong>(FE) Fecha de Emisión</strong></label>
                     <div className="col-sm-8">
-                    <DayPickerInput inputProps={{ style: style }} value={receiptFormData.dateOfIssue}  onDayChange={day => changeAttribute('dateOfIssue', day)} />
+                    <DayPickerInput 
+                    dayPickerProps={{
+                    locale: 'es',
+                    localeUtils: MomentLocaleUtils,
+                    }}
+                    formatDate={formatDate} parseDate={parseDate} 
+                    inputProps={{ style: style }} value={receiptFormData.dateOfIssue}  onDayChange={day => changeAttribute('dateOfIssue', day)} />
                     </div>
                 </div>
 
                 <div className="form-group row">
                     <label htmlFor="paymentDate" className="col-sm-4 col-form-label"><strong>(FP) Fecha de Pago</strong></label>
                     <div className="col-sm-8">
-                    <DayPickerInput inputProps={{ style: style }} value={receiptFormData.paymentDate}  onDayChange={day => changeAttribute('paymentDate', day)} />
+                    <DayPickerInput 
+                    dayPickerProps={{
+                    locale: 'es',
+                    localeUtils: MomentLocaleUtils,
+                    }}
+                    formatDate={formatDate} parseDate={parseDate} 
+                    inputProps={{ style: style }} value={receiptFormData.paymentDate}  onDayChange={day => changeAttribute('paymentDate', day)} />
                     </div>
                 </div>
 

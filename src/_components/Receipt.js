@@ -14,6 +14,12 @@ const Receipt = () => {
         stage: 0
     });
 
+    const limitDatesInPicker = () => {
+        const dt = new Date();
+        dt.setDate( dt.getDate() - 1 );
+        return dt;
+    }
+
     const [receiptFormData, setReceiptFormData] = useState({
         name: '',
         description: '',
@@ -29,7 +35,7 @@ const Receipt = () => {
             isCommercialYear: true,
             isNominal: false,
             percentage: 0,
-            discountDate: new Date()
+            discountDate: limitDatesInPicker()
         },
         rateTerm: {
             id: 8,
@@ -66,7 +72,7 @@ const Receipt = () => {
                 isCommercialYear: true,
                 isNominal: false,
                 percentage: 0,//cuando se envie se debe poner entre 100
-                discountDate: new Date()
+                discountDate: limitDatesInPicker()
             },
             rateTerm: {
                 id: 8,
