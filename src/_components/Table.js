@@ -118,7 +118,7 @@ const Table = () => {
                 {
                     receiptsToList.map(
                         receipInList => 
-                        <tr key={receipInList.id} onClick={()=>goToReceiptSelected(receipInList.id)}>
+                        <tr className="cursorlist" key={receipInList.id} onClick={()=>goToReceiptSelected(receipInList.id)}>
                             <td>{receipInList.name}</td>
                             <td>{receipInList.description}</td>
                             <td>{formatDate(receipInList.createDate)}</td>

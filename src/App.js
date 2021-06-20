@@ -1,15 +1,15 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { BrowserRouter, Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import './App.scss';
 import Home from './_components/Home';
 import SignUp from './_components/SignUp';
 import Receipt from './_components/Receipt';
 import Historial from './_components/Historial';
-
+import BarButton from "./_components/BarButton";
 import { tokenAuth } from './config/token';
 
 //REDUX
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import store from './store';
 import ViewReceipt from './_components/ViewReceipt';
 
@@ -30,10 +30,9 @@ function App() {
     }
   }
 
-  const token =  localStorage.getItem('token-receipt');
+  const [token, setToken] = useState(localStorage.getItem('token-receipt'));
 
   const isExpiredToken = tokenExpired(token);
-
 
   if (!isExpiredToken) {
     tokenAuth(token);
@@ -42,13 +41,19 @@ function App() {
     tokenAuth(null);
   }
 
+  const logout = () => {
+    sideNavRef.current.style.width = "0px";
+    localStorage.removeItem('token-receipt');
+    tokenAuth(null);
+  }
 
   return (
     <BrowserRouter>
     <Provider 
       store={store}
     >
-      <div className="col-2 selectable"><h2 onClick={openSideNav} className="header-title">☰</h2></div>
+    <BarButton openSideNav={openSideNav} token={token} setToken={setToken}></BarButton>
+      {/* // {token ? <div className="col-2 selectable"><h2 onClick={openSideNav} className="header-title">☰</h2></div> : null} */}
 
       <div className="container">
       
@@ -60,11 +65,12 @@ function App() {
           <Route exact path="/historial" component={Historial}></Route>
         </Switch>
 
+  
         <div id="mySidenav" className="sidenav" ref={sideNavRef}>
-          <h2 onClick={closeSideNav} className="ml-3 selectable header-title">☰</h2>
-          <Link className="header-title my-2 colornav" to={'/receipt'} onClick={closeSideNav}>Inicio</Link>
-          <Link className="header-title my-2 colornav" to={'/historial'} onClick={closeSideNav}>Historial</Link>
-          <Link className="header-title my-2 colornav" to={'/'}  onClick={closeSideNav}>Cerrar Sesión</Link>
+              <h2 onClick={closeSideNav} className="ml-3 selectable header-title">☰</h2>
+              <Link className="header-title my-2 colornav" to={'/receipt'} onClick={closeSideNav}>Inicio</Link>
+              <Link className="header-title my-2 colornav" to={'/historial'} onClick={closeSideNav}>Historial</Link>
+              <Link className="header-title my-2 colornav" to={'/'}  onClick={logout}>Cerrar Sesión</Link>
         </div>
 
       </div>
