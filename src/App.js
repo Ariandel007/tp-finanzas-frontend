@@ -65,8 +65,8 @@ function App() {
       <div className="container">
       
         <Switch>
-          <PrivateRoutePostLogin exact path="/" component={Home}></PrivateRoutePostLogin>
-          <PrivateRoutePostLogin exact path="/sign-up" component={SignUp}></PrivateRoutePostLogin>
+          <PrivateRoutePostLogin exact path="/" token={token} component={Home}></PrivateRoutePostLogin>
+          <PrivateRoutePostLogin exact path="/sign-up" token={token} component={SignUp}></PrivateRoutePostLogin>
           <PrivateRoute exact path="/receipt" token={token} component={Receipt}></PrivateRoute>
           <PrivateRoute exact path="/receiptselected/:idReceipt" token={token} component={ViewReceipt}></PrivateRoute>
           <PrivateRoute exact path="/historial" token={token} component={Historial}></PrivateRoute>
