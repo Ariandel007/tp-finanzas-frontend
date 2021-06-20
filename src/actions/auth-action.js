@@ -24,13 +24,13 @@ export function userLoginAction(user) {
             
             const responseLogin = res.data;
 
-            tokenAuth(responseLogin.token);
-
-            dispatch(loginSuccess(responseLogin));
-
             localStorage.setItem('token-receipt', responseLogin.token);
 
             localStorage.setItem('user-receipt', JSON.stringify(responseLogin.user));
+
+            tokenAuth(responseLogin.token);
+
+            dispatch(loginSuccess(responseLogin));
 
         } catch (error) {
             dispatch(loginError());
@@ -47,13 +47,13 @@ export function userRegisterAction(userToRegister) {
 
             const responseRegister = res.data;
 
-            tokenAuth(responseRegister.token);
-
-            dispatch(registerSuccess(responseRegister));
-
             localStorage.setItem('token-receipt', responseRegister.token);
 
             localStorage.setItem('user-receipt', JSON.stringify(responseRegister.user));
+
+            tokenAuth(responseRegister.token);
+
+            dispatch(registerSuccess(responseRegister));
 
         } catch (error) {
             dispatch(registerError());

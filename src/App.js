@@ -7,6 +7,7 @@ import Receipt from './_components/Receipt';
 import Historial from './_components/Historial';
 import BarButton from "./_components/BarButton";
 import PrivateRoute from './routes/privateRoute';
+import PrivateRoutePostLogin from './routes/privateRoutePostLogin';
 
 import { tokenAuth } from './config/token';
 
@@ -64,8 +65,8 @@ function App() {
       <div className="container">
       
         <Switch>
-          <Route exact path="/" component={Home}></Route>
-          <Route exact path="/sign-up" component={SignUp}></Route>
+          <PrivateRoutePostLogin exact path="/" component={Home}></PrivateRoutePostLogin>
+          <PrivateRoutePostLogin exact path="/sign-up" component={SignUp}></PrivateRoutePostLogin>
           <PrivateRoute exact path="/receipt" token={token} component={Receipt}></PrivateRoute>
           <PrivateRoute exact path="/receiptselected/:idReceipt" token={token} component={ViewReceipt}></PrivateRoute>
           <PrivateRoute exact path="/historial" token={token} component={Historial}></PrivateRoute>

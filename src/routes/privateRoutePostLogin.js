@@ -1,14 +1,14 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-const PrivateRoute = ({ token, component: Component, ...props }) => {
+const PrivateRoutePostLogin = ({ token, component: Component, ...props }) => {
 
-    const authenticated = !!token;
+    const authenticated = !token;
 
     return (
         <Route { ...props }
             render={ props => !authenticated ?
-                <Redirect to="/"></Redirect> 
+                <Redirect to="/historial"></Redirect> 
                 :
                 <Component { ...props }></Component>
             }
@@ -16,4 +16,4 @@ const PrivateRoute = ({ token, component: Component, ...props }) => {
     );
 }
 
-export default PrivateRoute;
+export default PrivateRoutePostLogin;
