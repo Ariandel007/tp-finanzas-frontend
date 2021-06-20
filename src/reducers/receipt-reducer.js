@@ -11,7 +11,7 @@ import {
 const initialState = {
     receipt: null,
     loading: false,
-    receiptList: []
+    receiptList: [],
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -41,7 +41,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                receiptList: action.payload.receiptList
+                receiptList: action.payload
             }
 
         default:

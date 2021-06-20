@@ -6,6 +6,7 @@ import SignUp from './_components/SignUp';
 import Receipt from './_components/Receipt';
 import Historial from './_components/Historial';
 
+import { tokenAuth } from './config/token';
 
 //REDUX
 import { Provider } from 'react-redux';
@@ -17,6 +18,9 @@ function App() {
 
   const openSideNav = () => sideNavRef.current.style.width = "250px";
   const closeSideNav = () => sideNavRef.current.style.width = "0px";
+
+  const token =  localStorage.getItem('token-receipt');
+  tokenAuth(token);
 
   return (
     <BrowserRouter>
