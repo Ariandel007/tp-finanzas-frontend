@@ -20,7 +20,6 @@ const LoginForm = () => {
     });
 
     const onChangeInputHandler = e => {
-
         setUserLoginForm({
             ...userLoginForm,
             [e.target.name]: e.target.value,
@@ -34,7 +33,6 @@ const LoginForm = () => {
             login(userLoginForm);
             history.push('/receipt');
         }
-        
     }
 
     return (

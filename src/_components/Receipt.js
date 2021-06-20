@@ -74,9 +74,9 @@ const Receipt = () => {
                 numberDays: 360
             },
             compoundingPeriod: {
-                id: 0,
-                name: '',
-                numberDays: 0,
+                id: 1,
+                name: 'Diario',
+                numberDays: 1,
             },
             expenses: [
     

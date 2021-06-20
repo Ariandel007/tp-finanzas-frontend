@@ -1,5 +1,5 @@
 import { sort, ascending } from "d3-array";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPageReceiptAction } from "../actions/receipt-action";
 
@@ -9,7 +9,8 @@ const Table = () => {
 
     const dispatch = useDispatch();
 
-    const getReceipts = pagination => dispatch(getPageReceiptAction(pagination));
+    // const getReceipts = pagination => dispatch(getPageReceiptAction(pagination));
+    const getReceipts = useCallback(pagination => dispatch(getPageReceiptAction(pagination)), [dispatch]);
 
     const [currentPage, setCurrentPage] = useState({
         page: 0,
@@ -33,6 +34,7 @@ const Table = () => {
     }
 
     useEffect(() => {
+        //getReceipts(currentPage);
         getReceipts(currentPage);
     }, [currentPage, getReceipts]);
 

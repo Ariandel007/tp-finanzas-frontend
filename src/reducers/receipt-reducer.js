@@ -10,6 +10,7 @@ import {
 
 const initialState = {
     receipt: null,
+    receiptSelected: null,
     loading: false,
     receiptList: [],
 };
@@ -28,7 +29,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                receipt: action.payload.receipt,
+                receipt: action.payload,
             }
         
         case SAVE_RECEIPT_ERROR:
