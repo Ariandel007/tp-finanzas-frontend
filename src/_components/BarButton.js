@@ -6,7 +6,6 @@ const BarButton = ({openSideNav, token, setToken}) => {
     const location = useLocation();
 
     useEffect(() => {
-        console.log('hello there');
         setToken(localStorage.getItem('token-receipt'));
     }, [location, setToken]);
 
