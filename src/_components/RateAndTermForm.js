@@ -241,15 +241,16 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                     <label htmlFor="dateOfIssue" className="col-sm-4 col-form-label"><strong>(FD) Fecha de Descuento</strong></label>
                     <div className="col-sm-8">
                         <DayPickerInput
-                        formatDate={formatDate}
-                        parseDate={parseDate}
-                         dayPickerProps={{
+                        dayPickerProps={{
                             locale: 'es',
                             localeUtils: MomentLocaleUtils,
                             disabledDays: {
                                 after: limitDatesInPicker(),
-                            },
-                        }} inputProps={{ style: style }} value={receiptFormData.rate.discountDate} onDayChange={day => onRateDateDiscount(day)} />
+                            }
+                        }}
+                        formatDate={formatDate}
+                        parseDate={parseDate}
+                        inputProps={{ style: style }} value={receiptFormData.rate.discountDate} onDayChange={day => onRateDateDiscount(day)} />
                     </div>
                 </div>
 
