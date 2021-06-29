@@ -244,9 +244,9 @@ const RateAndTermForm = ({ dataView, setdataView, receiptFormData, setReceiptFor
                         formatDate={formatDate}
                         parseDate={parseDate}
                          dayPickerProps={{
+                            locale: 'es',
+                            localeUtils: MomentLocaleUtils,
                             disabledDays: {
-                                locale: 'es',
-                                localeUtils: MomentLocaleUtils,
                                 after: limitDatesInPicker(),
                             },
                         }} inputProps={{ style: style }} value={receiptFormData.rate.discountDate} onDayChange={day => onRateDateDiscount(day)} />
