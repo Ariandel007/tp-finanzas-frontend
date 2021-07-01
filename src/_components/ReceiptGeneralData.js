@@ -101,7 +101,7 @@ const ReceiptGeneralData = ({ receiptFormData, setReceiptFormData }) => {
                 </div>
 
                 <div className="form-group row">
-                    <label htmlFor="totalValue" className="col-sm-4 col-form-label"><strong>(TR)Total a Recibir</strong></label>
+                    <label htmlFor="totalValue" className="col-sm-4 col-form-label"><strong>(TR)Total Recibo</strong></label>
                     <div className="col-sm-8">
                     <input type="text" className="form-control" id="totalValue" name="totalValue" value={receiptFormData.totalValue} onChange={onChangeInput} placeholder="Ingrese monto"/>
                     </div>

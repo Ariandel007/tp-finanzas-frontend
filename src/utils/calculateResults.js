@@ -103,7 +103,7 @@ const calculateResults = (receiptFormData) => {
 
     result.netWorth = netWorth.toFixed(2);
 
-    // VALOR TOTAL A RECIBIR
+    // VALOR Total Recibo
     const totalValueToReceive = netWorth - retainage - sumExpensesStart;
     result.totalValueToReceive = totalValueToReceive.toFixed(2);
 
