@@ -99,12 +99,12 @@ const calculateResults = (receiptFormData) => {
     result.sumExpensesStart = sumExpensesStart.toFixed(2);
 
     //VALOR NETO
-    const netWorth = totalValue - discount;
+    const netWorth = totalValue - discount - totalValue*0.08;
 
     result.netWorth = netWorth.toFixed(2);
 
     // VALOR TOTAL A RECIBIR
-    const totalValueToReceive = netWorth -retainage - sumExpensesStart;
+    const totalValueToReceive = netWorth - retainage - sumExpensesStart;
     result.totalValueToReceive = totalValueToReceive.toFixed(2);
 
     //SUMA DE GASTOS FINALES TOTALES

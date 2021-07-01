@@ -57,13 +57,13 @@ const ReceiptGeneralData = ({ receiptFormData, setReceiptFormData }) => {
 
     useEffect(() => {
         if (receiptFormData.totalValue >= 1500) {
-            const newValue = receiptFormData.totalValue*0.08;
+            //const newValue = receiptFormData.totalValue*0.08;
+            const newValue = receiptFormData.totalValue;
             setReceiptFormData({
                 ...receiptFormData,
                 retainage: newValue
             })
-        }
-        ;
+        };
     }, [receiptFormData.totalValue]);
     
 
