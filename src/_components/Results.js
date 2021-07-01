@@ -8,7 +8,7 @@ const Results = ({ calculateReceipt }) => {
 
                         <div className="col-12 col-md-6">
                             <div className="form-group row">
-                                <label className="col-6 col-form-label"><strong>(TEA) Tasa Efectiva Anual (sin costes)</strong></label>
+                                <label className="col-6 col-form-label"><strong>(TEA) Tasa Efectiva Anual</strong></label>
                                 <div className="col-6">
                                     <input type="text" readOnly className="form-control" value={calculateReceipt.ratePercentage}/>
                                 </div>
